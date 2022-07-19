@@ -1,7 +1,8 @@
-{ pkgs, ... }:
+{ fix-gnome-console, pkgs, ... }:
 
 {
 	nix.settings.experimental-features = [ "nix-command" "flakes" ];
+	nixpkgs.overlays = [ fix-gnome-console ];
 
 	# drivers
 	services.printing.drivers = with pkgs; [ foo2zjs ];

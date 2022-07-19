@@ -18,12 +18,15 @@
 
 			mkHost = name: path:
 				nixosSystem {
-					specialArgs = self.nixosModules;
+					specialArgs = self.nixosModules // self.overlays;
 					modules = [ { networking.hostName = name; } path ];
 				};
+
+			mkOverlay = name: path: import path;
 
 		in {
 			nixosModules = mapAttrs mkModule (nixPaths ./modules);
 			nixosConfigurations = mapAttrs mkHost (nixPaths ./hosts);
+			overlays = mapAttrs mkOverlay (nixPaths ./overlays);
 		};
 }

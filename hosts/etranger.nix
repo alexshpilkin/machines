@@ -1,10 +1,10 @@
-{ by-uuid, generic, lib, macbook, ... }:
+{ by-uuid, desktop, lib, macbook, ... }:
 
 with lib;
 
 {
 	system.stateVersion = "21.11";
-	imports = [ by-uuid generic macbook ];
+	imports = [ by-uuid desktop macbook ];
 
 	hardware.enableRedistributableFirmware = true;
 	nixpkgs.config.allowUnfreePredicate = pkg:
@@ -52,4 +52,6 @@ with lib;
 		isNormalUser = true;
 		extraGroups = [ "wheel" ];
 	};
+
+	services.xserver.displayManager.autoLogin.user = "alex";
 }
