@@ -1,14 +1,18 @@
-{ by-uuid, ... }:
+{ by-uuid, lib, macbook, ... }:
+
+with lib;
 
 {
 	system.stateVersion = "21.11";
-	imports = [ by-uuid ];
+	imports = [ by-uuid macbook ];
 
-	# Hardware features
-
-	nixpkgs.system = "x86_64-linux";
-	hardware.video.hidpi.enable = true;
-	boot.loader.systemd-boot.consoleMode = "keep";
+	hardware.enableRedistributableFirmware = true;
+	nixpkgs.config.allowUnfreePredicate = pkg:
+		builtins.elem (getName pkg) [
+			"broadcom-sta"
+			"facetimehd-calibration"
+			"facetimehd-firmware"
+		];
 
 	# Boot loader
 
