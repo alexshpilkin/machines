@@ -19,7 +19,15 @@
 			mkHost = name: path:
 				nixosSystem {
 					specialArgs = self.nixosModules // self.overlays;
-					modules = [ { networking.hostName = name; } path ];
+					modules = [
+						{
+							system.configurationRevision = mkIf (self ? rev) self.rev;
+							networking.hostName = name;
+							nix.registry.nixos-config.flake = self;
+							nix.registry.nixpkgs.flake = nixpkgs;
+						}
+						path
+					];
 				};
 
 			mkOverlay = name: path: import path;
