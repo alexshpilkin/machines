@@ -1,10 +1,10 @@
-{ by-uuid, lib, macbook, ... }:
+{ by-uuid, generic, lib, macbook, ... }:
 
 with lib;
 
 {
 	system.stateVersion = "21.11";
-	imports = [ by-uuid macbook ];
+	imports = [ by-uuid generic macbook ];
 
 	hardware.enableRedistributableFirmware = true;
 	nixpkgs.config.allowUnfreePredicate = pkg:
