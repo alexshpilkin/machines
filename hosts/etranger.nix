@@ -4,8 +4,6 @@
 	system.stateVersion = "21.11";
 	imports = [ by-uuid ];
 
-	networking.hostName = "etranger";
-
 	# Hardware features
 
 	nixpkgs.system = "x86_64-linux";
