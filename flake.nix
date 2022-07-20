@@ -1,3 +1,5 @@
+#!/usr/bin/env -S nixos-rebuild --flake
+
 {
 	inputs.nixpkgs.url = "nixpkgs/nixos-unstable";
 
