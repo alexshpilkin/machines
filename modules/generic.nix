@@ -29,7 +29,6 @@ in {
 			nixos-option # NixOS option reference
 			ntfs3g ntfsprogs # NTFS (duh)
 			pinentry pinentry-gnome # for GPG (FIXME)
-			syncthing # stable user unit paths for Syncthing (FIXME)
 			iw iwd dhcpcd # backup networking
 		]
 		(mkIf config.documentation.man.enable [
