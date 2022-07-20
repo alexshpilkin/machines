@@ -1,14 +1,16 @@
 { by-uuid, desktop, lib, macbook, ... }:
 
-with lib;
+let
+	inherit (builtins) elem;
+	inherit (lib) getName;
 
-{
+in {
 	system.stateVersion = "21.11";
 	imports = [ by-uuid desktop macbook ];
 
 	hardware.enableRedistributableFirmware = true;
 	nixpkgs.config.allowUnfreePredicate = pkg:
-		builtins.elem (getName pkg) [
+		elem (getName pkg) [
 			"broadcom-sta"
 			"facetimehd-calibration"
 			"facetimehd-firmware"

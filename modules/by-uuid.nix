@@ -1,21 +1,21 @@
 { config, lib, ... }:
 
-with lib;
-
 let
+	inherit (lib) mkIf mkMerge mkOption types;
+	inherit (types) attrsOf listOf nullOr str submodule;
 
 	uuidOpts = { name, config, ... }: {
 		options.partuuid = mkOption {
 			default = null;
 			example = "7d444840-9dc0-11d1-b245-5ffdce74fad2";
-			type = with types; nullOr str;
+			type = nullOr str;
 			description = "Partition UUID of the device";
 		};
 
 		options.uuid = mkOption {
 			default = null;
 			example = "7d444840-9dc0-11d1-b245-5ffdce74fad2";
-			type = with types; nullOr str;
+			type = nullOr str;
 			description = "Filesystem UUID of the device";
 		};
 
@@ -28,13 +28,13 @@ let
 in {
 	options = {
 		boot.initrd.luks.devices = mkOption {
-			type = with types; attrsOf (submodule uuidOpts);
+			type = attrsOf (submodule uuidOpts);
 		};
 		fileSystems = mkOption {
-			type = with types; attrsOf (submodule uuidOpts);
+			type = attrsOf (submodule uuidOpts);
 		};
 		swapDevices = mkOption {
-			type = with types; listOf (submodule uuidOpts);
+			type = listOf (submodule uuidOpts);
 		};
 	};
 }

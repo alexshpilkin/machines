@@ -4,17 +4,21 @@
 	inputs.nixpkgs.url = "nixpkgs/nixos-unstable";
 
 	outputs = { self, nixpkgs }:
-		with nixpkgs.lib;
 		let
+			inherit (builtins) pathExists readDir;
+			inherit (nixpkgs.lib)
+				filterAttrs hasSuffix mapAttrs mapAttrs' mkIf nameValuePair nixosSystem
+				removeSuffix;
+
 			nixPaths = dir:
 				let
 					isNix = entry: type:
 						if type == "directory"
-						then builtins.pathExists (dir + "/${entry}/default.nix")
+						then pathExists (dir + "/${entry}/default.nix")
 						else hasSuffix ".nix" entry;
 					toPair = entry: type:
 						nameValuePair (removeSuffix ".nix" entry) (dir + "/${entry}");
-				in mapAttrs' toPair (filterAttrs isNix (builtins.readDir dir));
+				in mapAttrs' toPair (filterAttrs isNix (readDir dir));
 
 			mkModule = name: path: { imports = [ path ]; };
 

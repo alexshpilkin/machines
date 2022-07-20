@@ -1,8 +1,9 @@
 { config, intel, lib, ... }:
 
-with lib;
+let
+	inherit (lib) mkDefault;
 
-{
+in {
 	imports = [ intel ];
 
 	boot.initrd.availableKernelModules = [
