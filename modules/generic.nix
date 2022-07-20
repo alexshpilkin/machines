@@ -1,6 +1,9 @@
-{ fix-gnome-console, pkgs, ... }:
+{ config, fix-gnome-console, lib, pkgs, ... }:
 
-{
+let
+	inherit (lib) mkDefault mkIf mkMerge;
+
+in {
 	nix.settings.experimental-features = [ "nix-command" "flakes" ];
 	nix.settings = {
 		substituters = [ "https://nixpkgs-unfree.cachix.org" ];
@@ -21,11 +24,21 @@
 	# programs
 	#boot.binfmt.emulatedSystems = [ "aarch64-linux" ]; # FIXME
 	programs.nix-ld.enable = true;
-	environment.systemPackages = with pkgs; [
-		nixos-option # NixOS option reference
-		ntfs3g ntfsprogs # NTFS (duh)
-		pinentry pinentry-gnome # for GPG (FIXME)
-		syncthing # stable user unit paths for Syncthing (FIXME)
-		iw iwd dhcpcd # backup networking
+	environment.systemPackages = with pkgs; mkMerge [
+		[
+			nixos-option # NixOS option reference
+			ntfs3g ntfsprogs # NTFS (duh)
+			pinentry pinentry-gnome # for GPG (FIXME)
+			syncthing # stable user unit paths for Syncthing (FIXME)
+			iw iwd dhcpcd # backup networking
+		]
+		(mkIf config.documentation.man.enable [
+			man-pages man-pages-posix # system referece
+		])
 	];
+
+	# documentation
+	documentation.doc.enable = mkDefault true;
+	documentation.info.enable = mkDefault true;
+	documentation.man.enable = mkDefault true;
 }
