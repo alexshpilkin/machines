@@ -1,14 +1,19 @@
 #!/usr/bin/env -S nixos-rebuild --flake
 
 {
+	inputs.flake-registry = {
+		url = "github:NixOS/flake-registry";
+		flake = false;
+	};
+
 	inputs.nixpkgs.url = "nixpkgs/nixos-unstable";
 
-	outputs = { self, nixpkgs }:
+	outputs = { self, flake-registry, nixpkgs }:
 		let
 			inherit (builtins) pathExists readDir;
 			inherit (nixpkgs.lib)
-				filterAttrs hasSuffix mapAttrs mapAttrs' mkIf nameValuePair nixosSystem
-				removeSuffix;
+				filterAttrs hasSuffix mapAttrs mapAttrs' mkDefault mkIf nameValuePair
+				nixosSystem removeSuffix;
 
 			nixPaths = dir:
 				let
@@ -31,6 +36,8 @@
 							networking.hostName = name;
 							nix.registry.nixos-config.flake = self;
 							nix.registry.nixpkgs.flake = nixpkgs;
+							nix.settings.flake-registry =
+								mkDefault (flake-registry + "/flake-registry.json");
 						}
 						path
 					];
