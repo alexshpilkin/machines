@@ -19,7 +19,6 @@ in {
 	networking.useDHCP = false; # true is deprecated
 	services.openssh.enable = true;
 	services.pcscd.enable = true; # Yubikey support
-	programs.gnupg.agent = { enable = true; enableSSHSupport = true; }; # FIXME
 
 	# programs
 	#boot.binfmt.emulatedSystems = [ "aarch64-linux" ]; # FIXME
@@ -28,7 +27,6 @@ in {
 		[
 			nixos-option # NixOS option reference
 			ntfs3g ntfsprogs # NTFS (duh)
-			pinentry pinentry-gnome # for GPG (FIXME)
 			iw iwd dhcpcd # backup networking
 		]
 		(mkIf config.documentation.man.enable [
