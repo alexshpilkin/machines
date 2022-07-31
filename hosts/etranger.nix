@@ -54,6 +54,4 @@ in {
 		isNormalUser = true;
 		extraGroups = [ "wheel" ];
 	};
-
-	services.xserver.displayManager.autoLogin.user = "alex";
 }
