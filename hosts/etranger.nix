@@ -54,4 +54,10 @@ in {
 		isNormalUser = true;
 		extraGroups = [ "wheel" ];
 	};
+
+	users.users.ser = {
+		uid = 1001;
+		description = "Sergey Shpilkin";
+		isNormalUser = true;
+	};
 }
