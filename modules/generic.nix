@@ -12,6 +12,7 @@ in {
 	nixpkgs.overlays = [ fix-gnome-console ];
 
 	# drivers
+	boot.kernelPackages = pkgs.linuxPackages_latest;
 	services.printing.drivers = with pkgs; [ foo2zjs ];
 
 	# services
