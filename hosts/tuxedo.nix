@@ -58,6 +58,11 @@
 		];
 	};
 
+	services.tor.enable = true;
+	services.tor.relay.onionServices = {
+		ssh = { version = 3; map = [ 22 ]; };
+	};
+
 	# Users
 
 	users.users.alex = {
