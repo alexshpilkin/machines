@@ -41,7 +41,22 @@
 
 	# Network
 
-	networking.interfaces.enp0s25.useDHCP = true;
+	networking.interfaces.enp0s25 = {
+		useDHCP = true;
+		wakeOnLan.enable = true;
+	};
+
+	boot.initrd.availableKernelModules = [ "e1000e" ];
+	boot.initrd.network.enable = true;
+	boot.initrd.network.ssh = {
+		enable = true;
+		hostKeys = [ "/etc/secrets/initrd/ssh_host_ed25519_key" ];
+		authorizedKeys = [
+			"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC3Pvaf9+XvzdvLRA5CleeC6ph1hI/o3MVwvvI3xQoe7aRNWEPK5WD2J7MzIQnJBZxO7fWwkKBlEzv1NHLEHGUlM/6CwkjzZOh7b4hKSyfe7u9PSamY9dcuPblnEB7jyT10ezZT+6lqlue2dAmsHai+1jF6hoAqlY8jT4vhT2co3cZNtwOnjbrK8GA6rQiVkStIy3xma1goNV/Xl/zeC4M6qG7XXuJbWPY75v35O5QEtd/hwYFMBr6ShA/9OJ45V9qSk+njGkx0h6C0GNF10Y6Gq4J0ApDLVePx0kGWfvRECVhMFtFwRNeiPRKWWOEH7fp/teRYKB03HQFBusAsCdmF openpgp:0x4B3A894B"
+			"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKGNzen6TbP0eCldtfPoREFvYfUivPSsIdR0ssr6+6uV alex@fortytwo.lointa.in"
+			"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM/zu4B9UxPz3Di+QIjxNV0Hh3oOOh0Vt2ajNfGIrZ9W alex@xiaoxin.lointa.in"
+		];
+	};
 
 	# Users
 
