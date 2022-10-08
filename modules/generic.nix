@@ -13,6 +13,7 @@ in {
 
 	# drivers
 	boot.kernelPackages = pkgs.linuxPackages_latest;
+	hardware.usbWwan.enable = true;
 	services.printing.drivers = with pkgs; [ foo2zjs ];
 
 	# services
