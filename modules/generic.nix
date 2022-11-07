@@ -23,6 +23,7 @@ in {
 	services.pcscd.enable = true; # Yubikey support
 
 	# programs
+	boot.initrd.systemd.enable = true;
 	#boot.binfmt.emulatedSystems = [ "aarch64-linux" ]; # FIXME
 	programs.nix-ld.enable = true;
 	environment.systemPackages = with pkgs; mkMerge [
