@@ -2,12 +2,9 @@ final: prev:
 
 {
 	gnome-console = prev.gnome-console.overrideAttrs (old: {
-		src = final.fetchFromGitLab {
-			domain = "gitlab.gnome.org";
-			owner = "kepstin";
-			repo = "console";
-			rev = "bc75ad9b71df3fee877dd030a84c9f2235d24f9c"; # new-colours
-			sha256 = "19zb4dpbhzkr4akjgjjn9493acdsnahi86wvzl6jkqn9ghqcsrwh";
-		};
+		patches = old.patches ++ [ (final.fetchpatch {
+			url = "https://gitlab.gnome.org/GNOME/console/-/merge_requests/80.patch";
+			sha256 = "0w47hxhgyi88yd16pw28rylj58l0xw7y3671pmgs41szxvgs9g17";
+		}) ];
 	});
 }
