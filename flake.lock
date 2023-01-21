@@ -3,11 +3,11 @@
     "flake-registry": {
       "flake": false,
       "locked": {
-        "lastModified": 1661161594,
-        "narHash": "sha256-tu1KKNLw+v7ZOIUPGDE66tn9vEyhIAWiiJYZRGGev8E=",
+        "lastModified": 1674218164,
+        "narHash": "sha256-oLNWhwrV252kiy2tGQwwJNKFR+iG0fjsw0GSE/XVTR8=",
         "owner": "NixOS",
         "repo": "flake-registry",
-        "rev": "8634fb4e1db6c76ce037bc00ef80f9ebd2616476",
+        "rev": "507c028d8d189b6647592dfd10ee677578de45a1",
         "type": "github"
       },
       "original": {
@@ -18,11 +18,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1672617983,
-        "narHash": "sha256-68WDiCBs631mbDDk4UAKdGURKcsfW6hjb7wgudTAe5o=",
+        "lastModified": 1674120619,
+        "narHash": "sha256-xLT1FQl7/jNPOEq5q/vmc3AExt1V9LtcjM+QY2+MUpA=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "0fc9fca9c8d43edd79d33fea0dd8409d7c4580f4",
+        "rev": "d7705c01ef0a39c8ef532d1033bace8845a07d35",
         "type": "github"
       },
       "original": {
