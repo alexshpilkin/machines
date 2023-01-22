@@ -1,7 +1,9 @@
-{ generic, ... }:
+{ fix-gnome-console, generic, ... }:
 
 {
 	imports = [ generic ];
+
+	nixpkgs.overlays = [ fix-gnome-console ];
 
 	services.printing.enable = true;
 

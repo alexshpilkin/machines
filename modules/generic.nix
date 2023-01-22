@@ -1,4 +1,4 @@
-{ config, fix-gnome-console, lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 let
 	inherit (lib) mkDefault mkIf mkMerge;
@@ -9,7 +9,6 @@ in {
 		substituters = [ "https://nixpkgs-unfree.cachix.org" ];
 		trusted-public-keys = [ "nixpkgs-unfree.cachix.org-1:hqvoInulhbV4nJ9yJOEr+4wxhDV4xq2d1DK7S6Nj6rs=" ];
 	};
-	nixpkgs.overlays = [ fix-gnome-console ];
 
 	# drivers
 	boot.kernelPackages = pkgs.linuxPackages_latest;
