@@ -3,8 +3,6 @@
 {
 	imports = [ generic ];
 
-	nixpkgs.overlays = [ fix-gnome-console ];
-
 	services.printing.enable = true;
 
 	sound.enable = true; # ALSA
