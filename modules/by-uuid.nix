@@ -1,7 +1,7 @@
 { config, lib, ... }:
 
 let
-	inherit (lib) mkIf mkMerge mkOption types;
+	inherit (lib) mdDoc mkIf mkMerge mkOption types;
 	inherit (types) attrsOf listOf nullOr str submodule;
 
 	uuidOpts = { name, config, ... }: {
@@ -9,14 +9,14 @@ let
 			default = null;
 			example = "7d444840-9dc0-11d1-b245-5ffdce74fad2";
 			type = nullOr str;
-			description = "Partition UUID of the device";
+			description = mdDoc "Partition UUID of the device";
 		};
 
 		options.uuid = mkOption {
 			default = null;
 			example = "7d444840-9dc0-11d1-b245-5ffdce74fad2";
 			type = nullOr str;
-			description = "Filesystem UUID of the device";
+			description = mdDoc "Filesystem UUID of the device";
 		};
 
 		config.device = mkMerge [
