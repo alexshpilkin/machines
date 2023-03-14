@@ -4,6 +4,7 @@ let
 	inherit (lib) mkDefault mkIf mkMerge;
 
 in {
+	nix.settings.auto-optimise-store = true;
 	nix.settings.experimental-features = [ "nix-command" "flakes" ];
 	nix.settings = {
 		substituters = [ "https://nixpkgs-unfree.cachix.org" ];
