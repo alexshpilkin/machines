@@ -1,4 +1,4 @@
-{ fix-gnome-console, generic, ... }:
+{ fix-gnome-console, generic, pkgs, ... }:
 
 {
 	imports = [ generic ];
@@ -16,7 +16,14 @@
 		wireplumber.enable = true;
 	};
 
-	networking.networkmanager = { enable = true; enableStrongSwan = true; };
+	networking.networkmanager = {
+		enable = true;
+		plugins = [
+			(pkgs.networkmanager_strongswan.overrideAttrs (final: prev: {
+				configureFlags = prev.configureFlags ++ [ "--disable-more-warnings" ];
+			}))
+		];
+	};
 
 	services.xserver.enable = true;
 	services.xserver.displayManager.gdm = { enable = true; wayland = true; };

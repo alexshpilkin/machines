@@ -25,7 +25,6 @@ in {
 	services.hardware.bolt.enable = true;
 
 	# screen
-	hardware.video.hidpi.enable = mkDefault true;
 	boot.loader.systemd-boot.consoleMode = "keep";
 
 	# webcam
