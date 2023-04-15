@@ -3,6 +3,8 @@
 {
 	imports = [ generic ];
 
+	security.pki.certificateFiles = [ ./kindle.pem ];
+
 	services.printing.enable = true;
 
 	sound.enable = true; # ALSA
