@@ -7,6 +7,8 @@
 
 	services.printing.enable = true;
 
+	services.udev.packages = [ pkgs.android-udev-rules ];
+
 	sound.enable = true; # ALSA
 	security.rtkit.enable = true;
 	hardware.pulseaudio.enable = false;

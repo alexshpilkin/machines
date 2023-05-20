@@ -52,7 +52,7 @@ in {
 		uid = 1000;
 		description = "Alex Shpilkin";
 		isNormalUser = true;
-		extraGroups = [ "wheel" ];
+		extraGroups = [ "adbusers" "wheel" ];
 	};
 
 	users.users.ser = {
