@@ -34,4 +34,8 @@ in {
 	# wireless
 	boot.kernelModules = [ "wl" ];
 	boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
+	networking.networkmanager.wifi = {
+		scanRandMacAddress = false;
+		macAddress = "permanent";
+	};
 }
