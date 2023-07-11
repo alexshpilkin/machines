@@ -7,8 +7,14 @@ in {
 	nix.settings.auto-optimise-store = true;
 	nix.settings.experimental-features = [ "nix-command" "flakes" ];
 	nix.settings = {
-		substituters = [ "https://nixpkgs-unfree.cachix.org" ];
-		trusted-public-keys = [ "nixpkgs-unfree.cachix.org-1:hqvoInulhbV4nJ9yJOEr+4wxhDV4xq2d1DK7S6Nj6rs=" ];
+		substituters = [
+			"https://nixpkgs-unfree.cachix.org"
+			"https://numtide.cachix.org"
+		];
+		trusted-public-keys = [
+			"nixpkgs-unfree.cachix.org-1:hqvoInulhbV4nJ9yJOEr+4wxhDV4xq2d1DK7S6Nj6rs="
+			"numtide.cachix.org-1:2ps1kLBUWjxIneOy1Ik6cQjb41X0iXVXeHigGmycPPE="
+		];
 	};
 
 	# drivers
