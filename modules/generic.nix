@@ -19,7 +19,7 @@ in {
 
 	# drivers
 	boot.kernelPackages = pkgs.linuxPackages_latest;
-	hardware.usbWwan.enable = true;
+	hardware.usb-modeswitch.enable = true;
 
 	# services
 	networking.firewall.enable = false;
