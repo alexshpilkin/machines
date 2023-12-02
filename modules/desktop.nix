@@ -1,11 +1,37 @@
-{ fix-gnome-console, generic, pkgs, ... }:
+{ fix-gnome-console, generic, lib, pkgs, unfree, ... }:
 
-{
-	imports = [ generic ];
+let
+	inherit (builtins) elem;
+	inherit (lib) getName;
+
+in {
+	imports = [ generic unfree ];
+
+	nixpkgs.allowUnfreePackages = [
+		"brother-udev-rule-type1"
+		"brscan4"
+		"brscan4-etc-files"
+	];
 
 	security.pki.certificateFiles = [ ./kindle.pem ];
 
-	services.printing.enable = true;
+	hardware.sane = {
+		enable = true;
+		# brscan5 segfaults
+		brscan4 = {
+			enable = true;
+			netDevices.frater = {
+				name = "Frater";
+				ip = "192.168.1.16";
+				model = "MFC-8880DN";
+			};
+		};
+	};
+
+	services.printing = {
+		enable = true;
+		drivers = with pkgs; [ foomatic-db-ppds ];
+	};
 
 	services.udev.packages = [ pkgs.android-udev-rules ];
 

@@ -1,4 +1,4 @@
-{ by-uuid, desktop, lib, macbook, ... }:
+{ by-uuid, desktop, lib, macbook, unfree, ... }:
 
 let
 	inherit (builtins) elem;
@@ -6,15 +6,14 @@ let
 
 in {
 	system.stateVersion = "21.11";
-	imports = [ by-uuid desktop macbook ];
+	imports = [ by-uuid desktop macbook unfree ];
 
 	hardware.enableRedistributableFirmware = true;
-	nixpkgs.config.allowUnfreePredicate = pkg:
-		elem (getName pkg) [
-			"broadcom-sta"
-			"facetimehd-calibration"
-			"facetimehd-firmware"
-		];
+	nixpkgs.allowUnfreePackages = [
+		"broadcom-sta"
+		"facetimehd-calibration"
+		"facetimehd-firmware"
+	];
 
 	# Boot loader
 
