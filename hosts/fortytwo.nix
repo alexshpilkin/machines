@@ -27,11 +27,13 @@
 	fileSystems."/" = {
 		uuid = "6af00c79-227a-4b39-a672-c64a2f5806ba";
 		fsType = "xfs";
+		options = [ "discard" ];
 	};
 
 	fileSystems."/home" = {
 		uuid = "bb3f2ab6-a235-48ea-bb18-a4197e540709";
 		fsType = "xfs";
+		options = [ "discard" ];
 	};
 
 	swapDevices = [ { uuid = "d482b5ec-8534-47e3-8feb-155929ae3abf"; } ];
