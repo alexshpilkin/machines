@@ -18,7 +18,7 @@ in {
 	};
 
 	# drivers
-	boot.kernelPackages = pkgs.linuxPackages_latest;
+	boot.kernelPackages = mkDefault pkgs.linuxPackages_latest;
 	hardware.usb-modeswitch.enable = true;
 
 	# services
