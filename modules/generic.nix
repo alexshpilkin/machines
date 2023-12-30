@@ -1,6 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
+	inherit (builtins) head length;
 	inherit (lib) mkDefault mkIf mkMerge;
 
 in {
@@ -16,6 +17,10 @@ in {
 			"numtide.cachix.org-1:2ps1kLBUWjxIneOy1Ik6cQjb41X0iXVXeHigGmycPPE="
 		];
 	};
+
+	# boot
+	boot.resumeDevice = mkIf (length config.swapDevices == 1)
+		(head config.swapDevices).device;
 
 	# drivers
 	boot.kernelPackages = mkDefault pkgs.linuxPackages_latest;
