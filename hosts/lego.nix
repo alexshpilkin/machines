@@ -11,7 +11,6 @@
 	'';
 	#boot.initrd.kernelModules = [ "amdgpu" ];
 	boot.kernelPackages = pkgs.linuxPackages_testing;
-	boot.kernelParams = [ "amd-pstate=active" ];
 
 	hardware.enableRedistributableFirmware = true;
 	hardware.wirelessRegulatoryDatabase = true;
