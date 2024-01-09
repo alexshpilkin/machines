@@ -5,6 +5,11 @@ let
 	inherit (lib) mkDefault mkIf mkMerge;
 
 in {
+	nix.nixPath = mkIf (config.nix.channel.enable) [
+		"nixpkgs=${config.nix.registry.nixpkgs.flake}"
+		"nixos-config=${config.nix.registry.nixos-config.flake}"
+		"/nix/var/nix/profiles/per-user/root/channels"
+	];
 	nix.settings.auto-optimise-store = true;
 	nix.settings.experimental-features = [ "nix-command" "flakes" ];
 	nix.settings = {
