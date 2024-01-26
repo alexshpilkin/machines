@@ -1,6 +1,21 @@
 { amd, by-uuid, desktop, lib, pkgs, power-profiles-daemon, ... }:
 
-{
+let
+
+amdgpu-vcn-beta = pkgs.stdenv.mkDerivation {
+	pname = "amdgpu-vcn";
+	version = "4.0.2-beta";
+	src = pkgs.fetchurl {
+		url = "https://gitlab.freedesktop.org/mesa/mesa/uploads/f51d221a24d4ac354e2d1d901613b594/vcn_4_0_2.bin";
+		sha256 = "0rg4sm6sivn6s356cnxgfqq5d7gg2f3ghwi3psc0w6i7pks3i3z8";
+	};
+	dontUnpack = true;
+	installPhase = ''
+		install -Dt $out/lib/firmware/amdgpu -m 0644 $src
+	'';
+};
+
+in {
 	system.stateVersion = "21.11";
 	imports = [ amd by-uuid desktop ];
 
@@ -11,6 +26,7 @@
 	boot.kernelPackages = pkgs.linuxPackages_testing;
 
 	hardware.enableRedistributableFirmware = true;
+	hardware.firmware = [ amdgpu-vcn-beta ];
 	hardware.wirelessRegulatoryDatabase = true;
 
 	services.fwupd.enable = true;
