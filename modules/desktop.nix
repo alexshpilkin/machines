@@ -33,6 +33,8 @@ in {
 		drivers = with pkgs; [ foomatic-db-ppds ];
 	};
 
+	services.resolved.enable = true;
+
 	services.udev.packages = [ pkgs.android-udev-rules ];
 
 	sound.enable = true; # ALSA
