@@ -1,10 +1,8 @@
-{ amd, by-uuid, desktop, lib, pkgs, ppd-cpu-and-platform, ... }:
+{ amd, by-uuid, desktop, lib, pkgs, power-profiles-daemon, ... }:
 
 {
 	system.stateVersion = "21.11";
 	imports = [ amd by-uuid desktop ];
-
-	nixpkgs.overlays = [ ppd-cpu-and-platform ];
 
 	boot.extraModprobeConfig = ''
 		options cfg80211 ieee80211_regdom="IL"
@@ -16,6 +14,10 @@
 	hardware.wirelessRegulatoryDatabase = true;
 
 	services.fwupd.enable = true;
+	services.power-profiles-daemon.package = pkgs.power-profiles-daemon.overrideAttrs {
+		src = power-profiles-daemon;
+		version = power-profiles-daemon.rev;
+	};
 
 	# Boot loader
 
