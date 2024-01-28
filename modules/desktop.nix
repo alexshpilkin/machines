@@ -2,7 +2,7 @@
 
 let
 	inherit (builtins) elem;
-	inherit (lib) getName;
+	inherit (lib) getName mkForce;
 
 in {
 	imports = [ generic unfree ];
@@ -56,4 +56,6 @@ in {
 	services.xserver.desktopManager.gnome.enable = true;
 	# https://github.com/NixOS/nixpkgs/issues/32580
 	environment.variables.WEBKIT_DISABLE_COMPOSITING_MODE = "1";
+
+	services.gnome.gnome-keyring.enable = mkForce false;
 }
