@@ -19,6 +19,22 @@ in {
 	system.stateVersion = "21.11";
 	imports = [ amd by-uuid desktop ];
 
+	boot.kernelParams = [ "quiet" ];
+	boot.loader.timeout = 0;
+	boot.plymouth = {
+		enable = true;
+		logo = "${pkgs.nixos-icons}/share/icons/hicolor/72x72/apps/nix-snowflake-white.png";
+		extraConfig = ''
+			DeviceScale=2
+		'';
+	};
+	programs.dconf.profiles.gdm.databases = [{
+		settings = {
+			"org/gnome/desktop/interface".scaling-factor = 1.5;
+			"org/gnome/mutter".experimental-features = [ "scale-monitor-framebuffer" ];
+		};
+	}];
+
 	boot.extraModprobeConfig = ''
 		options cfg80211 ieee80211_regdom="IL"
 	'';
