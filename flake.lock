@@ -18,11 +18,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1707268954,
-        "narHash": "sha256-2en1kvde3cJVc3ZnTy8QeD2oKcseLFjYPLKhIGDanQ0=",
+        "lastModified": 1708807242,
+        "narHash": "sha256-sRTRkhMD4delO/hPxxi+XwLqPn8BuUq6nnj4JqLwOu0=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "f8e2ebd66d097614d51a56a755450d4ae1632df1",
+        "rev": "73de017ef2d18a04ac4bfd0c02650007ccb31c2a",
         "type": "github"
       },
       "original": {
@@ -31,29 +31,10 @@
         "type": "indirect"
       }
     },
-    "power-profiles-daemon": {
-      "flake": false,
-      "locked": {
-        "host": "gitlab.freedesktop.org",
-        "lastModified": 1707154394,
-        "narHash": "sha256-UC93VIlTGtQeMhTRhCrVKq7VgPBvQmfvsd7ZF4KPVDc=",
-        "owner": "upower",
-        "repo": "power-profiles-daemon",
-        "rev": "b26d928ddd2309375519c647f19920e4d96df8f6",
-        "type": "gitlab"
-      },
-      "original": {
-        "host": "gitlab.freedesktop.org",
-        "owner": "upower",
-        "repo": "power-profiles-daemon",
-        "type": "gitlab"
-      }
-    },
     "root": {
       "inputs": {
         "flake-registry": "flake-registry",
-        "nixpkgs": "nixpkgs",
-        "power-profiles-daemon": "power-profiles-daemon"
+        "nixpkgs": "nixpkgs"
       }
     }
   },

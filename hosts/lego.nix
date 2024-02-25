@@ -1,4 +1,4 @@
-{ amd, by-uuid, desktop, lib, pkgs, power-profiles-daemon, ... }:
+{ amd, by-uuid, desktop, lib, pkgs, ... }:
 
 let
 
@@ -46,10 +46,6 @@ in {
 	hardware.wirelessRegulatoryDatabase = true;
 
 	services.fwupd.enable = true;
-	services.power-profiles-daemon.package = pkgs.power-profiles-daemon.overrideAttrs {
-		src = power-profiles-daemon;
-		version = power-profiles-daemon.rev;
-	};
 
 	# Boot loader
 

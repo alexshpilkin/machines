@@ -8,12 +8,7 @@
 
 	inputs.nixpkgs.url = "nixpkgs/nixos-unstable";
 
-	inputs.power-profiles-daemon = {
-		url = "gitlab:upower/power-profiles-daemon?host=gitlab.freedesktop.org";
-		flake = false;
-	};
-
-	outputs = { self, flake-registry, nixpkgs, power-profiles-daemon }:
+	outputs = { self, flake-registry, nixpkgs }:
 		let
 			inherit (builtins) pathExists readDir;
 			inherit (nixpkgs.lib)
@@ -34,9 +29,7 @@
 
 			mkHost = name: path:
 				nixosSystem {
-					specialArgs = self.nixosModules // self.overlays // {
-						inherit power-profiles-daemon;
-					};
+					specialArgs = self.nixosModules // self.overlays;
 					modules = [
 						{
 							system.configurationRevision = mkIf (self ? rev) self.rev;
