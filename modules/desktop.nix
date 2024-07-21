@@ -60,8 +60,8 @@ in {
 	services.xserver.displayManager.gdm = { enable = true; wayland = true; };
 	services.displayManager.defaultSession = "gnome";
 	services.xserver.desktopManager.gnome.enable = true;
-	# https://github.com/NixOS/nixpkgs/issues/32580
-	environment.variables.WEBKIT_DISABLE_COMPOSITING_MODE = "1";
+#	# https://github.com/NixOS/nixpkgs/issues/32580
+#	environment.variables.WEBKIT_DISABLE_COMPOSITING_MODE = "1";
 
 	services.gnome.gnome-keyring.enable = mkForce false;
 
