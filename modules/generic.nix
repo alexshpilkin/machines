@@ -33,7 +33,7 @@ in {
 
 	# services
 	networking.firewall.enable = false;
-	networking.useDHCP = false; # true is deprecated
+	networking.useDHCP = mkDefault false;
 	services.openssh.enable = true;
 	services.pcscd.enable = true; # Yubikey support
 
