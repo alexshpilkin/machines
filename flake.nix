@@ -19,10 +19,10 @@
 				let
 					isNix = entry: type:
 						if type == "directory"
-						then pathExists (dir + "/${entry}/default.nix")
+						then pathExists "${dir}/${entry}/default.nix"
 						else hasSuffix ".nix" entry;
 					toPair = entry: type:
-						nameValuePair (removeSuffix ".nix" entry) (dir + "/${entry}");
+						nameValuePair (removeSuffix ".nix" entry) "${dir}/${entry}";
 				in mapAttrs' toPair (filterAttrs isNix (readDir dir));
 
 			mkModule = name: path: { imports = [ path ]; };
@@ -37,7 +37,7 @@
 							nix.registry.nixos-config.flake = self;
 							nix.registry.nixpkgs.flake = nixpkgs;
 							nix.settings.flake-registry =
-								mkDefault (flake-registry + "/flake-registry.json");
+								mkDefault "${flake-registry}/flake-registry.json";
 						}
 						path
 					];
