@@ -25,7 +25,6 @@ in {
 		"virtio_pci"
 		"virtiofs"
 	];
-	# FIXME can these actually autodetect?
 	boot.initrd.kernelModules = [
 		"virtio_balloon"
 		"virtio_console"
@@ -37,7 +36,10 @@ in {
 	# Note cloud-init seems nonfunctional.
 
 	# FIXME why is this necessary?
-	systemd.services."serial-getty@ttyS0".enable = true;
+	systemd.services."serial-getty@ttyS0" = {
+		enable = true;
+		serviceConfig.Restart = "always";
+	};
 
 	# Filesystems
 
