@@ -17,6 +17,27 @@
 	networking.useDHCP = true;
 	networking.useNetworkd = true;
 
+	# Services
+
+	## HTTP server
+
+	services.nginx.enable = true;
+
+	## ACME client
+
+	security.acme = {
+		acceptTerms = true;
+		defaults.server = "https://acme-staging-v02.api.letsencrypt.org/directory";
+	};
+
+	security.acme.certs."moscow.sheaf.site" = {
+		email = "certmaster@moscow.sheaf.site";
+		webroot = "/var/lib/acme/acme-challenge/";
+	};
+	services.nginx.virtualHosts."moscow.sheaf.site".locations."/.well-known/acme-challenge/" = {
+		root = config.security.acme.certs."moscow.sheaf.site".webroot;
+	};
+
 	# Users
 
 	users.extraUsers.root = {
