@@ -1,4 +1,4 @@
-{ by-uuid, lib, pkgs, yandex, ... }:
+{ acme-swanctl, by-uuid, lib, pkgs, yandex, ... }:
 
 {
 	system.stateVersion = "21.11";
@@ -36,6 +36,18 @@
 	};
 	services.nginx.virtualHosts."moscow.sheaf.site".locations."/.well-known/acme-challenge/" = {
 		root = config.security.acme.certs."moscow.sheaf.site".webroot;
+	};
+
+	## IPsec server
+
+	services.strongswan-swanctl.enable = true;
+	security.acme.certs."moscow.sheaf.site" = {
+		postRun = "${acme-swanctl}/bin/acme-swanctl.sh";
+		reloadServices = [ "strongswan-swanctl" ];
+	};
+	systemd.services.strongswan-swanctl = {
+		wants = [ "acme-finished-moscow.sheaf.site.target" ];
+		after = [ "acme-finished-moscow.sheaf.site.target" ];
 	};
 
 	# Users
