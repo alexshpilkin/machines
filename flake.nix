@@ -12,8 +12,10 @@
 		let
 			inherit (builtins) pathExists readDir;
 			inherit (nixpkgs.lib)
-				filterAttrs hasSuffix mapAttrs mapAttrs' mkDefault mkIf nameValuePair
-				nixosSystem removeSuffix;
+				genAttrs filterAttrs hasSuffix mapAttrs mapAttrs' mkDefault mkIf
+				nameValuePair nixosSystem removeSuffix systems;
+
+			supportedSystems = systems.flakeExposed or systems.supported.hydra;
 
 			nixPaths = dir:
 				let
@@ -25,29 +27,44 @@
 						nameValuePair (removeSuffix ".nix" entry) "${dir}/${entry}";
 				in mapAttrs' toPair (filterAttrs isNix (readDir dir));
 
+			packagePaths = nixPaths ./pkgs;
+
 			mkModule = name: path: { imports = [ path ]; };
 
 			mkHost = name: path:
-				nixosSystem {
-					specialArgs = self.nixosModules // self.overlays;
-					modules = [
-						{
-							system.configurationRevision = mkIf (self ? rev) self.rev;
-							networking.hostName = name;
-							nix.registry.nixos-config.flake = self;
-							nix.registry.nixpkgs.flake = nixpkgs;
-							nix.settings.flake-registry =
-								mkDefault "${flake-registry}/flake-registry.json";
-						}
-						path
-					];
-				};
+				let
+					mkPackageArg = name: path:
+						self.packages.${host.config.nixpkgs.system}.${name};
+					host = nixosSystem {
+						specialArgs =
+							self.nixosModules // self.overlays //
+							mapAttrs mkPackageArg packagePaths;
+						modules = [
+							{
+								system.configurationRevision = mkIf (self ? rev) self.rev;
+								networking.hostName = name;
+								nix.registry.nixos-config.flake = self;
+								nix.registry.nixpkgs.flake = nixpkgs;
+								nix.settings.flake-registry =
+									mkDefault "${flake-registry}/flake-registry.json";
+							}
+							path
+						];
+					};
+				in host;
 
 			mkOverlay = name: path: import path;
+
+			mkPackage = system:
+				let inherit (nixpkgs.legacyPackages.${system}) callPackage; in
+				name: path: callPackage path {};
 
 		in {
 			nixosModules = mapAttrs mkModule (nixPaths ./modules);
 			nixosConfigurations = mapAttrs mkHost (nixPaths ./hosts);
 			overlays = mapAttrs mkOverlay (nixPaths ./overlays);
+			packages = genAttrs supportedSystems (system:
+				mapAttrs (mkPackage system) packagePaths);
+			defaultPackage = mapAttrs (system: pkgs: pkgs.default) self.packages;
 		};
 }
