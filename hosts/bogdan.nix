@@ -22,6 +22,7 @@ in {
 	networking.useNetworkd = true;
 
 	networking.nftables.enable = true;
+	networking.firewall.enable = true;
 	networking.nat = {
 		enable = true;
 		externalInterface = "en*";
@@ -43,6 +44,7 @@ in {
 	## HTTP server
 
 	services.nginx.enable = true;
+	networking.firewall.allowedTCPPorts = [ 80 ]; # http
 
 	## ACME client
 
@@ -69,6 +71,8 @@ in {
 		wants = [ "acme-finished-moscow.sheaf.site.target" ];
 		after = [ "acme-finished-moscow.sheaf.site.target" ];
 	};
+	networking.firewall.allowedUDPPorts = [ 500 4500 ]; # isakmp ipsec-nat-t
+	networking.firewall.extraInputRules = "meta l4proto { ah, esp } accept";
 
 	services.strongswan-swanctl.swanctl.pools."warrior" = {
 		addrs = "${prefix}.32-${prefix}.254";
@@ -122,6 +126,7 @@ in {
 			Multicast = true;
 		};
 	};
+	networking.firewall.trustedInterfaces = [ "warrior" ];
 	networking.nat.internalInterfaces = [ "warrior" ];
 
 	# Software

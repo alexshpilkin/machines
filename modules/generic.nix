@@ -32,7 +32,7 @@ in {
 	hardware.usb-modeswitch.enable = true;
 
 	# services
-	networking.firewall.enable = false;
+	networking.firewall.enable = mkDefault false;
 	networking.useDHCP = mkDefault false;
 	services.openssh.enable = true;
 	services.pcscd.enable = true; # Yubikey support
