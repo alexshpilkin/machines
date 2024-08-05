@@ -1,13 +1,9 @@
-{ by-uuid, config, generic, lib, modulesPath, pkgs, ... }:
+{ by-uuid, config, generic, lib, pkgs, ... }:
 
 # <https://yandex.cloud/ru/docs/compute/operations/image-create/custom-image>
 
-let
-	inherit (lib) mkOption;
-	headless = "${modulesPath}/profiles/headless.nix";
-
-in {
-	imports = [ by-uuid headless generic ];
+{
+	imports = [ by-uuid generic ];
 
 	nixpkgs.system = "x86_64-linux";
 
@@ -30,16 +26,6 @@ in {
 		"virtio_console"
 		"virtio-rng"
 	];
-
-	# Services
-
-	# Note cloud-init seems nonfunctional.
-
-	# FIXME why is this necessary?
-	systemd.services."serial-getty@ttyS0" = {
-		enable = true;
-		serviceConfig.Restart = "always";
-	};
 
 	# Filesystems
 
