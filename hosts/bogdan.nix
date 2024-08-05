@@ -99,6 +99,7 @@ in {
 
 		remote.default = {
 			auth = "eap-mschapv2";
+			eap_id = "%any";
 		};
 
 		children."warrior" = {
