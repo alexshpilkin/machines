@@ -21,6 +21,12 @@ in {
 	networking.useDHCP = true;
 	networking.useNetworkd = true;
 
+	networking.nftables.enable = true;
+	networking.nat = {
+		enable = true;
+		externalInterface = "en*";
+	};
+
 	# Services
 
 	## HTTP server
@@ -105,6 +111,7 @@ in {
 			Multicast = true;
 		};
 	};
+	networking.nat.internalInterfaces = [ "warrior" ];
 
 	# Software
 
