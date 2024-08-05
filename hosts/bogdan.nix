@@ -29,6 +29,17 @@ in {
 
 	# Services
 
+	## DNS recursive resolver
+
+	services.unbound.enable = true;
+	services.unbound.settings = {
+		server = {
+			interface = [ "127.0.0.1" "warrior" ];
+			access-control = [ "127.0.0.0/8 allow" "192.168.0.0/16 allow" ];
+			private-address = [ "127.0.0.0/8" "192.168.0.0/16" ];
+		};
+	};
+
 	## HTTP server
 
 	services.nginx.enable = true;
