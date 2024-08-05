@@ -1,6 +1,10 @@
-{ acme-swanctl, by-uuid, lib, pkgs, yandex, ... }:
+{ acme-swanctl, by-uuid, config, lib, pkgs, yandex, ... }:
 
-{
+let
+	prefix = "192.168.7";
+	warriorXFRM = 7;
+
+in {
 	system.stateVersion = "21.11";
 	imports = [ by-uuid yandex ];
 
@@ -27,12 +31,11 @@
 
 	security.acme = {
 		acceptTerms = true;
-		defaults.server = "https://acme-staging-v02.api.letsencrypt.org/directory";
+		defaults.webroot = "/var/lib/acme/acme-challenge/";
 	};
 
 	security.acme.certs."moscow.sheaf.site" = {
 		email = "certmaster@moscow.sheaf.site";
-		webroot = "/var/lib/acme/acme-challenge/";
 	};
 	services.nginx.virtualHosts."moscow.sheaf.site".locations."/.well-known/acme-challenge/" = {
 		root = config.security.acme.certs."moscow.sheaf.site".webroot;
@@ -49,6 +52,65 @@
 		wants = [ "acme-finished-moscow.sheaf.site.target" ];
 		after = [ "acme-finished-moscow.sheaf.site.target" ];
 	};
+
+	services.strongswan-swanctl.swanctl.pools."warrior" = {
+		addrs = "${prefix}.32-${prefix}.254";
+		dns = [ "${prefix}.1" ];
+	};
+	services.strongswan-swanctl.swanctl.connections."warrior" = {
+		if_id_in = toString warriorXFRM;
+		if_id_out = toString warriorXFRM;
+		pools = [ "warrior" ]; # FIXME: Use DHCP?
+
+		rekey_time = "0"; # Windows
+		keyingtries = 0; # i.e. infinite
+
+		proposals = [
+			"aes256-sha256-modp2048"
+			"aes256-sha1-modp1024" # Windows
+		];
+
+		local.default = {
+			id = "moscow.sheaf.site";
+			auth = "pubkey";
+			certs = [ "moscow.sheaf.site.pem" ];
+		};
+
+		remote.default = {
+			auth = "eap-mschapv2";
+		};
+
+		children."warrior" = {
+			mode = "tunnel";
+			local_ts = [ "0.0.0.0/0" ];
+			life_time = "0"; # Windows
+			esp_proposals = [
+				"aes256-sha256-modp2048"
+				"aes256-sha1" # Windows
+			];
+		};
+	};
+	services.strongswan-swanctl.includes = [ "/etc/swanctl/secrets.conf" ];
+	systemd.tmpfiles.rules = [ "f /etc/swanctl/secrets.conf 0600 root root" ];
+	systemd.network.networks."99-ethernet-default-dhcp".xfrm = [ "warrior" ];
+	systemd.network.netdevs."20-warrior" = {
+		netdevConfig = { Name = "warrior"; Kind = "xfrm"; };
+		xfrmConfig = { InterfaceId = warriorXFRM; };
+	};
+	systemd.network.networks."20-warrior" = {
+		name = "warrior";
+		address = [ "${prefix}.1/24" ];
+		linkConfig = {
+			MTUBytes = "1414"; # FIXME: Not sure that's right.
+			Multicast = true;
+		};
+	};
+
+	# Software
+
+	environment.systemPackages = [
+		config.services.strongswan-swanctl.package # for swanctl
+	];
 
 	# Users
 
