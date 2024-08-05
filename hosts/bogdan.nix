@@ -126,6 +126,9 @@ in {
 
 	# Software
 
+	documentation.doc.enable = false;
+	documentation.info.enable = false;
+
 	environment.systemPackages = [
 		config.services.strongswan-swanctl.package # for swanctl
 	];

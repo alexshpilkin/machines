@@ -44,10 +44,12 @@ in {
 	programs.nix-ld.enable = true;
 	environment.systemPackages = with pkgs; mkMerge [
 		[
-			nixos-option # NixOS option reference
 			ntfs3g ntfsprogs # NTFS (duh)
 			iw iwd dhcpcd # backup networking
 		]
+		(mkIf config.documentation.doc.enable [
+			nixos-option # NixOS option reference
+		])
 		(mkIf config.documentation.man.enable [
 			man-pages man-pages-posix # system referece
 		])
