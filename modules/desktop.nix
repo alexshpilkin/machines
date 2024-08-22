@@ -4,12 +4,6 @@ let
 	inherit (builtins) elem;
 	inherit (lib) getName mkForce;
 
-	# https://github.com/NixOS/nixpkgs/issues/282983
-	inherit (pkgs.linuxKernel.packagesFor (config.boot.kernelPackages.kernel.override {
-		stdenv = pkgs.gcc12Stdenv;
-		buildPackages = pkgs.buildPackages // { stdenv = pkgs.gcc12Stdenv; };
-	})) perf;
-
 in {
 	imports = [ generic unfree ];
 
@@ -64,5 +58,5 @@ in {
 
 	services.gnome.gnome-keyring.enable = mkForce false;
 
-	environment.systemPackages = [ perf ];
+	environment.systemPackages = [ config.boot.kernelPackages.perf ];
 }
