@@ -7,6 +7,11 @@ let
 in {
 	imports = [ generic unfree ];
 
+	boot.kernel.sysctl = {
+		"kernel.perf_event_paranoid" = 0;
+		"kernel.yama.ptrace_scope" = 0;
+	};
+
 	nixpkgs.allowUnfreePackages = [
 		"brother-udev-rule-type1"
 		"brscan4"
