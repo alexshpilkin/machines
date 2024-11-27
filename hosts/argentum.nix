@@ -21,10 +21,6 @@ in {
 	boot.loader.systemd-boot.enable = true;
 	boot.loader.efi.canTouchEfiVariables = true;
 
-	boot.initrd.systemd.emergencyAccess = true;
-	systemd.services.emergency.serviceConfig.Environment = [ "SYSTEMD_SULOGIN_FORCE=1" ];
-	systemd.services.rescue.serviceConfig.Environment = [ "SYSTEMD_SULOGIN_FORCE=1" ];
-
 	boot.kernelParams = [ "quiet" ];
 	boot.plymouth.enable = true;
 

@@ -38,10 +38,12 @@ in {
 	services.pcscd.enable = true; # Yubikey support
 
 	# programs
-	boot.initrd.systemd.enable = true;
+	boot.initrd.systemd = { enable = true; emergencyAccess = true; };
 	#boot.binfmt.emulatedSystems = [ "aarch64-linux" ]; # FIXME
 	programs.less.lessopen = null;
 	programs.nix-ld.enable = true;
+	systemd.services.emergency.serviceConfig.Environment = [ "SYSTEMD_SULOGIN_FORCE=1" ];
+	systemd.services.rescue.serviceConfig.Environment = [ "SYSTEMD_SULOGIN_FORCE=1" ];
 	environment.systemPackages = with pkgs; mkMerge [
 		[
 			ntfs3g ntfsprogs # NTFS (duh)
